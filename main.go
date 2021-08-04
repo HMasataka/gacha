@@ -46,6 +46,10 @@ func main() {
 	}
 
 	json.Unmarshal(j, &data)
+
+	fmt.Println(data.Keys())
+	fmt.Println(data.IsValidPercent())
+
 	for _, value := range data {
 		fmt.Println(value)
 		fmt.Println(reflect.TypeOf(value))
