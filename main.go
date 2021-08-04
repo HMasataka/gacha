@@ -6,6 +6,7 @@ import (
 	"math/rand"
 	"os"
 	"reflect"
+	"strconv"
 	"time"
 )
 
@@ -22,6 +23,18 @@ func (d Data) Keys() []string {
 		keys = append(keys, key)
 	}
 	return keys
+}
+
+func (d Data) IsValidPercent() (bool, error) {
+	var percent float64
+	for key := range d {
+		f, err := strconv.ParseFloat(key, 64)
+		if err != nil {
+			return false, err
+		}
+		percent += f
+	}
+	return percent == 100.0, nil
 }
 
 func main() {
