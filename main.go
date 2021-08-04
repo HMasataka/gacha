@@ -14,8 +14,18 @@ func randomFloat(max, min float64) float64 {
 	return rand.Float64()*(max-min) + min
 }
 
+type Data map[string]interface{}
+
+func (d Data) Keys() []string {
+	keys := make([]string, 0, len(d))
+	for key := range d {
+		keys = append(keys, key)
+	}
+	return keys
+}
+
 func main() {
-	data := make(map[string]interface{})
+	data := make(Data)
 
 	j, err := os.ReadFile("example.json")
 	if err != nil {
