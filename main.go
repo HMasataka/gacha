@@ -122,5 +122,9 @@ func main() {
 		panic(errors.New("Invalid percent"))
 	}
 
-	fmt.Println(run(data))
+	result, err := run(data)
+	if err != nil {
+		panic(err)
+	}
+	fmt.Println(result)
 }
