@@ -59,7 +59,7 @@ func (d Data) IsValidPercent() (bool, error) {
 	return percent == 100.0, nil
 }
 
-func do(data interface{}) (interface{}, error) {
+func run(data interface{}) (interface{}, error) {
 	switch reflect.TypeOf(data).Kind() {
 	case reflect.Map:
 		target, err := toData(data)
@@ -80,13 +80,13 @@ func do(data interface{}) (interface{}, error) {
 			}
 			percent += f
 			if r < percent {
-				return do(value)
+				return run(value)
 			}
 		}
 	case reflect.Slice:
 		target := toStrings(data.([]interface{}))
 		r := rand.Intn(len(target))
-		return do(target[r])
+		return run(target[r])
 	case reflect.String:
 		return data, nil
 	}
@@ -109,5 +109,5 @@ func main() {
 		panic(errors.New("Invalid percent"))
 	}
 
-	fmt.Println(do(data))
+	fmt.Println(run(data))
 }
