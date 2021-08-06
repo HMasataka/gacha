@@ -4,11 +4,14 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
+	"log"
 	"math/rand"
 	"os"
 	"reflect"
 	"strconv"
 	"time"
+
+	"github.com/jessevdk/go-flags"
 )
 
 func randomFloat(max, min float64) float64 {
@@ -94,10 +97,20 @@ func run(data interface{}) (interface{}, error) {
 	return nil, errors.New("error")
 }
 
+type Opts struct {
+	Input string `long:"input" short:"i" description:"Input file path" required:"true"`
+}
+
 func main() {
+	var opts Opts
+	_, err := flags.Parse(&opts)
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	data := make(Data)
 
-	j, err := os.ReadFile("example.json")
+	j, err := os.ReadFile(opts.Input)
 	if err != nil {
 		panic(err)
 	}
